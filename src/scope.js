@@ -65,10 +65,21 @@ Scope.prototype.$watchCollection = function(watchFn, listenerFn) {
   var internalWatchFn = function(scope) {
     newValue = watchFn(scope);
 
-    if (newValue !== oldValue) {
-      changeCount++;
+    if (_.isObject(newValue)) {
+      if (_.isArray(newValue)) {
+        if (!_.isArray(oldValue)) {
+          changeCount++;
+          oldValue = [];
+        }
+      } else {
+
+      }
+    } else {
+      if (newValue !== oldValue) {
+        changeCount++;
+      }
+      oldValue = newValue;
     }
-    oldValue = newValue;
 
     return changeCount;
   };

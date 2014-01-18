@@ -82,7 +82,10 @@ Scope.prototype.$watchCollection = function(watchFn, listenerFn) {
           }
         });
       } else {
-
+        if (!_.isObject(oldValue) || _.isArrayLike(oldValue)) {
+          changeCount++;
+          oldValue = {};
+        }
       }
     } else {
       if (newValue !== oldValue) {
